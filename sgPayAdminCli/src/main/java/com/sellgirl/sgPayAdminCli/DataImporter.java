@@ -32,6 +32,7 @@ import com.sellgirl.sgJavaHelper.SGLine;
 import com.sellgirl.sgJavaHelper.SGRef;
 import com.sellgirl.sgJavaHelper.SGSpeedCounter;
 import com.sellgirl.sgJavaHelper.SGSqlCommandString;
+import com.sellgirl.sgJavaHelper.SqlExpressionOperator;
 import com.sellgirl.sgJavaHelper.config.SGDataHelper;
 import com.sellgirl.sgJavaHelper.file.SGDirectory;
 import com.sellgirl.sgJavaHelper.file.SGPath;
@@ -39,6 +40,7 @@ import com.sellgirl.sgJavaHelper.sql.ISGJdbc;
 import com.sellgirl.sgJavaHelper.sql.ISqlExecute;
 import com.sellgirl.sgJavaHelper.sql.SGSqlExecute;
 import com.sellgirl.sgJavaHelper.sql.SGSqlInsertCollection;
+import com.sellgirl.sgJavaHelper.sql.SGSqlWhereCollection;
 import com.sellgirl.sgJavaHelper.time.SGWaiter;
 import com.sellgirl.sgHelperExport.SGExcelHelper;
 
@@ -47,6 +49,7 @@ import com.sellgirl.sgHelperExport.SGExcelHelper;
          version = "1.0",
          description = "从 Excel 导入数据到服务器")
 public class DataImporter implements Callable<Integer> {
+	private final String TAG="DataImporter";
 	private AppConfiguration app;
 	public DataImporter(AppConfiguration app) {
 		this.app=app;
@@ -58,14 +61,14 @@ public class DataImporter implements Callable<Integer> {
 //    @Option(names = {"-s", "--server"}, description = "服务器地址", required = true)
 //    private String server;
 
-    @Option(names = {"-u", "--user"}, description = "SSH 用户名", defaultValue = "ubuntu")
-    private String user;
-
-    @Option(names = {"-p", "--password"}, description = "SSH 密码（也可用私钥）", interactive = true)
-    private String password;
-
-    @Option(names = {"-k", "--key"}, description = "私钥路径")
-    private File privateKey;
+//    @Option(names = {"-u", "--user"}, description = "SSH 用户名", defaultValue = "ubuntu")
+//    private String user;
+//
+//    @Option(names = {"-p", "--password"}, description = "SSH 密码（也可用私钥）", interactive = true)
+//    private String password;
+//
+//    @Option(names = {"-k", "--key"}, description = "私钥路径")
+//    private File privateKey;
 
     @Option(names = {"--json"}, description = "输出 JSON 格式结果")
     private boolean jsonOutput;
@@ -78,6 +81,8 @@ public class DataImporter implements Callable<Integer> {
     private String outImgPath;
     @Option(names = {"-t", "--type"}, description = "resourceType")
     private ResourceType resourceType;
+    @Option(names = {"-b", "--begin"}, description = "beginRow")
+    private long beginRow;
 
 //	String excelPath,String resourcePath,String outImgPath,
 //	ResourceType resourceType
@@ -117,7 +122,7 @@ public class DataImporter implements Callable<Integer> {
 //    }
     //-----------------导入逻辑------------------------
 
-	private boolean clear=true;
+	private boolean clear=false;
 	private boolean printBug=true;
 	private boolean printProgress=true;
 	
@@ -138,6 +143,8 @@ public class DataImporter implements Callable<Integer> {
 		
 		int err=0;
 		StringBuilder deny=new StringBuilder(); 
+		
+		long resourceId=-1;
 //		initresource();
 		try {
 ////			ISGJdbc srcJdbc = JdbcHelperTest.GetLiGeOrderProdJdbc();
@@ -179,6 +186,8 @@ public class DataImporter implements Callable<Integer> {
 			try (ISqlExecute dstExec = SGSqlExecute.Init(dstJdbc)) {
 				dstExec.AutoCloseConn(false);
 
+
+
 				ResourceService service=new ResourceService();
 //				service.setResourceType(resourceType);
 				
@@ -194,12 +203,28 @@ public class DataImporter implements Callable<Integer> {
 					  waiter=new SGWaiter(2000);
 				  }
 
+		            
+				SGSqlCommandString sql2=new SGSqlCommandString(
+						SGDataHelper.FormatString(
+								"select max(resource_id) from {0}",
+								service.getTableName(resourceType)
+						));
+				long maxId=SGDataHelper.ObjectToLong0(dstExec.QuerySingleValue(sql2.toString()));
+						
 				List<Map<String, Object>> list1=SGExcelHelper.ExcelToDictList(wb1);
-//				int idx=-1;
+				int idx=0;//idx应严格和excel的行对应
 //		        for(File i:files) {
 			    for(Map<String,Object> row:list1) {
-		        	//idx++;
+		        	idx++;
+		        	if(0<this.beginRow) {
+		        		if(this.beginRow>idx) {
+		        			continue;
+		        		}
+		        	}
 		        	
+//		        	if(200<idx) {
+//		        		throw new Exception("测试错误,lastId:"+dstExec.GetLastInsertedId());
+//		        	}
 //		        	String title=SGDataHelper.ReadFileToString(Paths.get(i.getAbsolutePath(), "title.txt").toString());
 //		        	Map<String,Object> row=list1.get(idx);
 		        	String title=SGDataHelper.ObjectToString(row.get("文件名")) ;
@@ -279,6 +304,11 @@ public class DataImporter implements Callable<Integer> {
 					//String c=ProjHelper.getFirstLetter(title);
 					
 					resourceCreate model=new resourceCreate();
+		        	if(0<this.beginRow) {
+		        		model.setResource_id(maxId+idx-beginRow);
+		        	}else {
+		        		model.setResource_id(maxId+idx);
+		        	}
 					model.setResource_name(title);
 					model.setResource_author(autor);
 //					model.setLetter(c);
@@ -325,7 +355,8 @@ public class DataImporter implements Callable<Integer> {
 					}
 //					System.out.println("id:"+r);
 //					System.out.println("id2:"+dstExec.GetLastInsertedId());
-					long resourceId=dstExec.GetLastInsertedId();
+					//后面复制图片等等操作,都要以resourceId这个准确数据库id为准
+					 resourceId=dstExec.GetLastInsertedId();
 					if(hasAnyCover) {
 						j=0;
 //						SGDirectory.EnsureExists(Paths.get(outImgPath, ""+resourceId).toString());
@@ -358,7 +389,7 @@ public class DataImporter implements Callable<Integer> {
 
 			        
 			        if(printProgress&&waiter.isOK()) {
-					System.out.println(speed.getEnSpeed(total,com.sellgirl.sgJavaHelper.SGDate.Now()));
+						System.out.println("lastId:"+resourceId+"----"+speed.getEnSpeed(idx,com.sellgirl.sgJavaHelper.SGDate.Now()));
 			        }
 		        }
 			    
@@ -381,8 +412,8 @@ public class DataImporter implements Callable<Integer> {
 
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			SGDataHelper.getLog().printException(e, TAG);
+			SGDataHelper.getLog().print("lastId:"+resourceId);
 		}
 		if(printProgress) {
 			System.out.println(speed.getEnSpeed(total,com.sellgirl.sgJavaHelper.SGDate.Now()));

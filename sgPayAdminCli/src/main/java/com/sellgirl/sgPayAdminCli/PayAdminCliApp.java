@@ -75,8 +75,10 @@ public class PayAdminCliApp
 //        DataImporter.main(args);
 
         CommandLine cli = new CommandLine(new PayAdminCliApp()); //如果只有单指令, 这里MyCli直接换成DataImporter即可
-        cli.addSubcommand("import", new DataImporter(app)); //DataImporter的定义, 见下面deepseek的说明
-        cli.addSubcommand("upload", new ImgUpload(app)); //DataImporter的定义, 见下面deepseek的说明
+        cli.addSubcommand("import", new DataImporter(app)); 
+        cli.addSubcommand("upload", new ImgUpload(app)); 
+        cli.addSubcommand("delete", new DataDeleter(app));
+        cli.addSubcommand("total", new DataTotal(app));
         int exitCode = cli.execute(args);
         System.exit(exitCode);
     }

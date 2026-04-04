@@ -1,0 +1,27 @@
+
+time:[2026-04-04 14:14:58]
+----errorLine----
+DriverManager.java: Line 689 -> 
+DriverManager.java: Line 247 -> 
+PFSqlConnHelper.java: Line 181 -> 
+PFSqlConnHelper.java: Line 117 -> 
+SGSqlExecuteBase.java: Line 382 -> 
+SGSqlExecuteBase.java: Line 76 -> 
+SGMySqlExecute.java: Line 30 -> 
+SGSqlExecute.java: Line 97 -> 
+DataDeleter.java: Line 128 -> 
+DataDeleter.java: Line 102 -> 
+DataDeleter.java: Line 47 -> 
+CommandLine.java: Line 2041 -> 
+CommandLine.java: Line 148 -> 
+CommandLine.java: Line 2461 -> 
+CommandLine.java: Line 2453 -> 
+CommandLine.java: Line 2415 -> 
+CommandLine.java: Line 2273 -> 
+CommandLine.java: Line 2417 -> 
+CommandLine.java: Line 2170 -> 
+PayAdminCliApp.java: Line 81  
+----errorMessage----
+java.sql.SQLException: No suitable driver found for jdbc:mysql://localhost:3306/sgshop?useSSL=false
+
+

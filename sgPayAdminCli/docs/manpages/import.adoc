@@ -1,0 +1,83 @@
+// tag::picocli-generated-full-manpage[]
+// tag::picocli-generated-man-section-header[]
+:doctype: manpage
+:revnumber: 1.0
+:manmanual: Import Manual
+:mansource: 1.0
+:man-linkstyle: pass:[blue R < >]
+= import(1)
+
+// end::picocli-generated-man-section-header[]
+
+// tag::picocli-generated-man-section-name[]
+== Name
+
+import - 从 Excel 导入数据到服务器
+
+// end::picocli-generated-man-section-name[]
+
+// tag::picocli-generated-man-section-synopsis[]
+== Synopsis
+
+*import* [*-hV*] [*--json*] [*-p*] [*-k*=_<privateKey>_] [*-o*=_<outImgPath>_]
+       [*-r*=_<resourcePath>_] [*-t*=_<resourceType>_] [*-u*=_<user>_] _<excelFile>_
+
+// end::picocli-generated-man-section-synopsis[]
+
+// tag::picocli-generated-man-section-description[]
+== Description
+
+从 Excel 导入数据到服务器
+
+// end::picocli-generated-man-section-description[]
+
+// tag::picocli-generated-man-section-options[]
+== Options
+
+*-h*, *--help*::
+  Show this help message and exit.
+
+*--json*::
+  输出 JSON 格式结果
+
+*-k*, *--key*=_<privateKey>_::
+  私钥路径
+
+*-o*, *--out*=_<outImgPath>_::
+  outImgPath
+
+*-p*, *--password*::
+  SSH 密码（也可用私钥）
+
+*-r*, *--resource*=_<resourcePath>_::
+  resourcePath
+
+*-t*, *--type*=_<resourceType>_::
+  resourceType
+
+*-u*, *--user*=_<user>_::
+  SSH 用户名
+
+*-V*, *--version*::
+  Print version information and exit.
+
+// end::picocli-generated-man-section-options[]
+
+// tag::picocli-generated-man-section-arguments[]
+== Arguments
+
+_<excelFile>_::
+  Excel 文件路径
+
+// end::picocli-generated-man-section-arguments[]
+
+// tag::picocli-generated-man-section-commands[]
+// end::picocli-generated-man-section-commands[]
+
+// tag::picocli-generated-man-section-exit-status[]
+// end::picocli-generated-man-section-exit-status[]
+
+// tag::picocli-generated-man-section-footer[]
+// end::picocli-generated-man-section-footer[]
+
+// end::picocli-generated-full-manpage[]
