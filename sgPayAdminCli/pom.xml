@@ -253,6 +253,12 @@
 			<artifactId>jackson-dataformat-properties</artifactId>
 		    <version>${jackson.version}</version>
 		</dependency>
+		
+<dependency>
+    <groupId>info.picocli</groupId>
+    <artifactId>picocli</artifactId>
+    <version>4.7.5</version>
+</dependency>
 <dependency>
 			<groupId>com.sellgirl</groupId>
 			<artifactId>sgJavaHelper</artifactId>
@@ -267,6 +273,20 @@
 					<artifactId>slf4j-simple</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sellgirl</groupId>
+			<artifactId>sgExportHelper</artifactId>
+			<version>${sgExportHelper.version}</version>
+			<!--<scope>test</scope>-->
+		</dependency>
+		
+		<!--web模块 引入service模块, 它引用的spring框架, 所以这里暂时不考虑(service去掉Spring引用了)-->
+		<dependency>
+			<groupId>com.sellgirl</groupId>
+			<artifactId>sellgirlPayService</artifactId>
+			<version>${sellgirlPayService.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -377,4 +397,28 @@
 		</snapshotRepository>
 
 	</distributionManagement>
+		
+       <!-- 其他配置 -->
+       
+       <!-- 默认 profile 不执行任何排除，所有资源都保留 -->
+       <profiles>
+           <profile>
+			<!--这样打包时使用此配置：mvn clean package -Pprod-build 注意这个配置移到sgJavaSpringHelperFather会变无效-->
+               <id>prod-build</id>
+               <build>
+                   <resources>
+                       <resource>
+                           <directory>src/main/resources</directory>
+                           <excludes>
+                               <!-- 在生产打包时排除 application-prod.yml -->
+                               <exclude>jdbc-config.yml</exclude>
+                               <exclude>jdbc-config-prod.yml</exclude>
+                               <exclude>jdbc-config-demo.yml</exclude>
+                               <!--<exclude>static/resourceImg/**</exclude>-->
+                           </excludes>
+                       </resource>
+                   </resources>
+               </build>
+           </profile>
+       </profiles>
 </project>

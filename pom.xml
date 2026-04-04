@@ -20,6 +20,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<!--<spring-boot.version>2.1.2.RELEASE</spring-boot.version>-->
 		<sgJavaHelper.version>0.0.42</sgJavaHelper.version>
+		<sgExportHelper.version>0.0.4</sgExportHelper.version>
+		<sellgirlPayService.version>0.0.5</sellgirlPayService.version>
 		<fastjson.version>1.2.83</fastjson.version>
 		<apache-httpclient.version>4.5.13</apache-httpclient.version>
 		<apache-httpmime.version>4.5.13</apache-httpmime.version>
