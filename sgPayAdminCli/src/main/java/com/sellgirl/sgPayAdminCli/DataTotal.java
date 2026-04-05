@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import com.sellgirl.sellgirlPayService.product.ResourceService;
 import com.sellgirl.sellgirlPayService.product.model.*;
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.PFPoint;
 import com.sellgirl.sgJavaHelper.SGDataTable;
 import com.sellgirl.sgJavaHelper.SGDate;
@@ -50,7 +51,7 @@ import com.sellgirl.sgHelperExport.SGExcelHelper;
          mixinStandardHelpOptions = true, 
          version = "1.0",
          description = "查看当天插入的mysql总行数")
-public class DataTotal implements Callable<Integer> {
+public class DataTotal implements Callable<Integer>, ISGUnProGuard {
 	private final String TAG="DataDeleter";
 	private AppConfiguration app;
 	public DataTotal(AppConfiguration app) {

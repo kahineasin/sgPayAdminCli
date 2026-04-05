@@ -2,7 +2,7 @@ package com.sellgirl.sgPayAdminCli.configuration.jdbc;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.sql.ISGJdbc;
 import com.sellgirl.sgJavaHelper.sql.PFJdbcBase;
 //import pf.java.pfMaxWellHelper.jdbc.IJdbcConfig;
@@ -16,7 +16,7 @@ import com.sellgirl.sgJavaHelper.sql.SGJdbc;
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JdbcConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcConfig
+public class JdbcConfiguration implements ISGUnProGuard//implements pf.java.pfMaxWellHelper.jdbc.IJdbcConfig
 {
 	@JsonProperty
 	private SGJdbc shop;

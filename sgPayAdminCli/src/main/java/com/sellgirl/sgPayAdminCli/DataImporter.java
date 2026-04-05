@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import com.sellgirl.sellgirlPayService.product.ResourceService;
 import com.sellgirl.sellgirlPayService.product.model.*;
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.PFPoint;
 import com.sellgirl.sgJavaHelper.SGDate;
 import com.sellgirl.sgJavaHelper.SGLine;
@@ -48,7 +49,7 @@ import com.sellgirl.sgHelperExport.SGExcelHelper;
          mixinStandardHelpOptions = true, 
          version = "1.0",
          description = "从 Excel 导入数据到服务器")
-public class DataImporter implements Callable<Integer> {
+public class DataImporter implements Callable<Integer>, ISGUnProGuard {
 	private final String TAG="DataImporter";
 	private AppConfiguration app;
 	public DataImporter(AppConfiguration app) {
@@ -138,6 +139,9 @@ public class DataImporter implements Callable<Integer> {
 //			ResourceType resourceType
 			) {
 		  SGSpeedCounter speed=null;
+//		  if(printProgress) {
+//			  speed=new SGSpeedCounter(com.sellgirl.sgJavaHelper.SGDate.Now());
+//			  }
 		  SGWaiter waiter=null;
 		  int total=0;
 		
@@ -222,12 +226,14 @@ public class DataImporter implements Callable<Integer> {
 		        		}
 		        	}
 		        	
-//		        	if(200<idx) {
+//		        	if(1<idx) {
 //		        		throw new Exception("测试错误,lastId:"+dstExec.GetLastInsertedId());
 //		        	}
 //		        	String title=SGDataHelper.ReadFileToString(Paths.get(i.getAbsolutePath(), "title.txt").toString());
 //		        	Map<String,Object> row=list1.get(idx);
 		        	String title=SGDataHelper.ObjectToString(row.get("文件名")) ;
+//		        	System.out.println("------------");
+//		        	System.out.println(row.get("文件名"));
 //		        	String autor=SGDataHelper.ReadFileToString(Paths.get(i.getAbsolutePath(), "autor.txt").toString());
 		        	String autor=this.getAuthor(title);
 //		        	String autor=SGDataHelper.ObjectToString(row.get("链接")) ;
@@ -305,7 +311,8 @@ public class DataImporter implements Callable<Integer> {
 					
 					resourceCreate model=new resourceCreate();
 		        	if(0<this.beginRow) {
-		        		model.setResource_id(maxId+idx-beginRow);
+//		        		model.setResource_id(maxId+idx-beginRow);//这样的话,第一次进来时等于maxId,重叠了一次,不对的
+		        		model.setResource_id(maxId+idx-beginRow+1);
 		        	}else {
 		        		model.setResource_id(maxId+idx);
 		        	}
@@ -412,10 +419,11 @@ public class DataImporter implements Callable<Integer> {
 
 
 		} catch (Exception e) {
+//			e.printStackTrace();
 			SGDataHelper.getLog().printException(e, TAG);
 			SGDataHelper.getLog().print("lastId:"+resourceId);
 		}
-		if(printProgress) {
+		if(printProgress&&null!=speed) {
 			System.out.println(speed.getEnSpeed(total,com.sellgirl.sgJavaHelper.SGDate.Now()));
 		}
 	}

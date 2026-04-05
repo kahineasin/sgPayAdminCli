@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.sellgirl.sellgirlPayService.product.ResourceService;
 import com.sellgirl.sellgirlPayService.product.model.*;
 import com.sellgirl.sgJavaHelper.AES;
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.PFPoint;
 import com.sellgirl.sgJavaHelper.SGDate;
 import com.sellgirl.sgJavaHelper.SGLine;
@@ -48,7 +49,7 @@ import com.sellgirl.sgHelperExport.SGExcelHelper;
          mixinStandardHelpOptions = true, 
          version = "1.0",
          description = "上传图片到云ubuntu")
-public class ImgUpload implements Callable<Integer> {
+public class ImgUpload implements Callable<Integer>  , ISGUnProGuard{
 	private AppConfiguration app;
 	public ImgUpload(AppConfiguration app) {
 		this.app=app;
@@ -60,14 +61,14 @@ public class ImgUpload implements Callable<Integer> {
 //    @Option(names = {"-s", "--server"}, description = "服务器地址", required = true)
 //    private String server;
 
-    @Option(names = {"-u", "--user"}, description = "SSH 用户名", defaultValue = "ubuntu")
-    private String user;
-
-    @Option(names = {"-p", "--password"}, description = "SSH 密码（也可用私钥）", interactive = true)
-    private String password;
-
-    @Option(names = {"-k", "--key"}, description = "私钥路径")
-    private File privateKey;
+//    @Option(names = {"-u", "--user"}, description = "SSH 用户名", defaultValue = "ubuntu")
+//    private String user;
+//
+//    @Option(names = {"-p", "--password"}, description = "SSH 密码（也可用私钥）", interactive = true)
+//    private String password;
+//
+//    @Option(names = {"-k", "--key"}, description = "私钥路径")
+//    private File privateKey;
 
     @Option(names = {"--json"}, description = "输出 JSON 格式结果")
     private boolean jsonOutput;
@@ -118,6 +119,7 @@ public class ImgUpload implements Callable<Integer> {
 	public void doUpload() {
 		ConcurrentSftpUpload2 uploader=(new ConcurrentSftpUpload2());
 		if(null!=app.getHy()) { uploader.setPassword(app.getHy());}
+		if(null!=app.getSsh()) { uploader.setSSH(app.getSsh());}
 		uploader.upload(this.localRoot, this.remoteRoot);
 	}
 	public static String getHy(String s) throws IOException, Exception {

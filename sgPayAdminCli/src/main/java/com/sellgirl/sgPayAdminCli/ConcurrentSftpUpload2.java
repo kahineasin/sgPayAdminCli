@@ -25,7 +25,7 @@ public class ConcurrentSftpUpload2 {
     private static final String USER ="root";// "ubuntu";
 //    private static final String SSH="C:\\Users\\Administrator\\.ssh\\id_rsa.pub";
   //"C:/Users/Administrator/.ssh/id_rsa";
-    private static final String SSH=null;//"C:\\Users\\Administrator\\.ssh\\id_rsa";
+    private static String SSH=null;//"C:\\Users\\Administrator\\.ssh\\id_rsa";
     private static String PASSWORD = null;
     
 //    private static final String LOCAL_ROOT = "D:\\cache\\html1\\shop\\static\\resourceImg";          // 本地根目录
@@ -268,5 +268,8 @@ public class ConcurrentSftpUpload2 {
     }
     public void setPassword(String pwd) {
     	PASSWORD=pwd;
+    }
+    public void setSSH(String ssh) {
+    	this.SSH=ssh;
     }
 }

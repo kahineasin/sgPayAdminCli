@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import com.sellgirl.sellgirlPayService.product.ResourceService;
 import com.sellgirl.sellgirlPayService.product.model.*;
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.PFPoint;
 import com.sellgirl.sgJavaHelper.SGDate;
 import com.sellgirl.sgJavaHelper.SGLine;
@@ -48,7 +49,7 @@ import com.sellgirl.sgHelperExport.SGExcelHelper;
          mixinStandardHelpOptions = true, 
          version = "1.0",
          description = "删除当天插入的mysql数据")
-public class DataDeleter implements Callable<Integer> {
+public class DataDeleter implements Callable<Integer>, ISGUnProGuard{
 	private final String TAG="DataDeleter";
 	private AppConfiguration app;
 	public DataDeleter(AppConfiguration app) {
@@ -103,14 +104,14 @@ public class DataDeleter implements Callable<Integer> {
             	long r=this.doDeleteToday(//excelFile, resourcePath, outImgPath, null
             			);
             	if(0<r) {System.out.println("成功删除:"+r+"条记录");}
-            	else {System.out.println("删除数据失败");}
+            	else {System.out.println("delete data failed");}
             }
             return 0;  // 成功返回 0
         } catch (Exception e) {
             if (jsonOutput) {
                 System.err.println("{\"status\":\"error\", \"message\":\"" + e.getMessage() + "\"}");
             } else {
-                System.err.println("导入失败：" + e.getMessage());
+                System.err.println("delete failed:" + e.getMessage());
             }
             return 1;  // 失败返回非零
         }

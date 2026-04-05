@@ -2,7 +2,7 @@ package com.sellgirl.sgPayAdminCli;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.sellgirl.sgJavaHelper.ISGUnProGuard;
 import com.sellgirl.sgJavaHelper.sql.ISGJdbc;
 import com.sellgirl.sgJavaHelper.sql.PFJdbcBase;
 //import pf.java.pfMaxWellHelper.jdbc.IJdbcConfig;
@@ -16,10 +16,12 @@ import com.sellgirl.sgPayAdminCli.configuration.jdbc.JdbcConfiguration;
  * @author Administrator
  *
  */
-public class AppConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcConfig
+public class AppConfiguration 
+implements ISGUnProGuard//pf.java.pfMaxWellHelper.jdbc.IJdbcConfig
 {
 	private JdbcConfiguration jdbc;
 	private String hy;
+	private String ssh;
 
 	public JdbcConfiguration getJdbc() {
 		return jdbc;
@@ -35,5 +37,13 @@ public class AppConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcCon
 
 	public void setHy(String hy) {
 		this.hy = hy;
+	}
+
+	public String getSsh() {
+		return ssh;
+	}
+
+	public void setSsh(String ssh) {
+		this.ssh = ssh;
 	}
 }

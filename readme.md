@@ -9,6 +9,8 @@ mvn package assembly:single
 ```
 mvn clean package assembly:single -Pprod-build
 ```
+## 混淆
+在本项目的 proguard目录下执行 java -jar proguard.jar @proguard2.pro (只混淆不编译)
 
 # 运行
 //test on openjdk version "17.0.8" 2023-07-18
@@ -31,7 +33,8 @@ java -jar ./sgPayAdminCli-0.0.1-jar-with-dependencies.jar
 2.上传图片 
 
 	```bash
-	java -jar ./sgPayAdminCli-0.0.1-jar-with-dependencies.jar upload -l D:\cache\html1\cliTestData\out -r /root/myapp/shop/static/resourceImg
+	java -jar ./sgPayAdminCli-0.0.1-jar-with-dependencies.jar upload -l D:\cache\html1\cliTestData\out -r /root/download/resourceImg
+	java -jar ./sgPayAdminCli-0.0.1-fusion.jar upload -l D:\cache\html1\cliTestData\out -r /root/download/resourceImg
 
 # 指令
 //test on openjdk version "17.0.8" 2023-07-18
