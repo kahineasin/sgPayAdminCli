@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import com.sellgirl.sellgirlPayService.product.ResourceService;
 import com.sellgirl.sellgirlPayService.product.model.*;
+import com.sellgirl.sgJavaHelper.AES;
 import com.sellgirl.sgJavaHelper.PFPoint;
 import com.sellgirl.sgJavaHelper.SGDate;
 import com.sellgirl.sgJavaHelper.SGLine;
@@ -34,6 +35,7 @@ import com.sellgirl.sgJavaHelper.SGSpeedCounter;
 import com.sellgirl.sgJavaHelper.SGSqlCommandString;
 import com.sellgirl.sgJavaHelper.config.SGDataHelper;
 import com.sellgirl.sgJavaHelper.file.SGDirectory;
+import com.sellgirl.sgJavaHelper.file.SGEncryptByte;
 import com.sellgirl.sgJavaHelper.file.SGPath;
 import com.sellgirl.sgJavaHelper.sql.ISGJdbc;
 import com.sellgirl.sgJavaHelper.sql.ISqlExecute;
@@ -114,8 +116,20 @@ public class ImgUpload implements Callable<Integer> {
     //-----------------上传逻辑------------------------
 
 	public void doUpload() {
-
-		(new ConcurrentSftpUpload2()).upload(this.localRoot, this.remoteRoot);
+		ConcurrentSftpUpload2 uploader=(new ConcurrentSftpUpload2());
+		if(null!=app.getHy()) { uploader.setPassword(app.getHy());}
+		uploader.upload(this.localRoot, this.remoteRoot);
 	}
-    
+	public static String getHy(String s) throws IOException, Exception {
+		String s2=getKey();
+    	if(null!=s2) { return AES.AESDecryptDemo(s,getKey());}else {return null;}
+	}
+    public static String getKey() throws IOException {
+    	File encFile = new File(Paths.get(SGDataHelper.GetBaseDirectoryAbsolutePath(),"b.jpg").toString());
+    	if(encFile.exists()) {
+		FileInputStream fis = new FileInputStream(encFile);
+		return SGEncryptByte.DecryptByteToString(fis, SGEncryptByte.DEFAULT_BUFFER_SIZE, 0x123456);
+    	}else {return null;}
+
+    }
 }

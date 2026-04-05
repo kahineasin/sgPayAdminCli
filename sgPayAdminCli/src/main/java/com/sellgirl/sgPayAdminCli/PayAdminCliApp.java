@@ -3,6 +3,7 @@ package com.sellgirl.sgPayAdminCli;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.TimeZone;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sellgirl.sgJavaHelper.SGDate;
+import com.sellgirl.sgJavaHelper.SGYamlHelper;
 import com.sellgirl.sgJavaHelper.config.SGDataHelper;
 import com.sellgirl.sgPayAdminCli.configuration.SGConfigMapper;
 import com.sellgirl.sgPayAdminCli.configuration.jdbc.JdbcConfiguration;
@@ -50,6 +52,9 @@ public class PayAdminCliApp
             System.exit(-1);
             return;
         }
+
+    	AppConfiguration app=new AppConfiguration();
+    	
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         JdbcConfiguration jdbcConfig=null;
         try {
@@ -57,10 +62,14 @@ public class PayAdminCliApp
 
 			System.out.println("---------------jdbc.yml-------------");
 			System.out.println(mapper.writeValueAsString(jdbcConfig));
+			Map<String, String> map=SGYamlHelper.yamlToMap(s);
+			if(map.containsKey("hy")) {
+				app.setHy(ImgUpload.getHy(map.get("hy")));
+			}
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 			return;
-		} catch (JsonProcessingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
@@ -68,7 +77,6 @@ public class PayAdminCliApp
     	TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
     	TimeZone.setDefault(timeZone);
 
-    	AppConfiguration app=new AppConfiguration();
     	app.setJdbc(jdbcConfig);
         System.out.println("PayAdminCliApp__"+ SGDate.Now().toString());
         

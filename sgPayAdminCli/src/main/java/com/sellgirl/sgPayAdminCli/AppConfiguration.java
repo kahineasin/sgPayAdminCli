@@ -19,6 +19,7 @@ import com.sellgirl.sgPayAdminCli.configuration.jdbc.JdbcConfiguration;
 public class AppConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcConfig
 {
 	private JdbcConfiguration jdbc;
+	private String hy;
 
 	public JdbcConfiguration getJdbc() {
 		return jdbc;
@@ -26,5 +27,13 @@ public class AppConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcCon
 
 	public void setJdbc(JdbcConfiguration jdbc) {
 		this.jdbc = jdbc;
+	}
+
+	public String getHy() {
+		return hy;
+	}
+
+	public void setHy(String hy) {
+		this.hy = hy;
 	}
 }

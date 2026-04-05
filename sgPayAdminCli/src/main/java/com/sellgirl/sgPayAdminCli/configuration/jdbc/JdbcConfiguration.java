@@ -20,6 +20,7 @@ public class JdbcConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcCo
 {
 	@JsonProperty
 	private SGJdbc shop;
+
 	public SGJdbc getShop() {
 		return shop;
 	}
@@ -27,4 +28,5 @@ public class JdbcConfiguration //implements pf.java.pfMaxWellHelper.jdbc.IJdbcCo
 	public void setDay(SGJdbc shop) {
 		this.shop = shop;
 	}
+
 }
