@@ -1,13 +1,13 @@
 hy: 
 ssh: C:\Users\Administrator\.ssh\id_rsa
 shop:
-    driverClassName: com.mysql.jdbc.Driver
-    driverVersion: 5.1.46
-    password: 123456
-    url: jdbc:mysql://localhost:3306/sgshop?useSSL=false
-    username: root
-    ip: localhost:3306
+    driverClassName: com.mysql.cj.jdbc.Driver
+    driverVersion: 8.0.23
+    password: axDvgYjIlk1!
+    url: jdbc:mysql://156.224.19.162:3306/sgshop?useSSL=false&allowPublicKeyRetrieval=true
+    username: youruser
+    ip: 156.224.19.162:3306
     dbName: sgshop
     dbaMobile: 15907658484
     dbaName: 吴肖均
-    dbaEmail: sasha@sellgirl.com
+    dbaEmail: sasha@sellgirl.commm

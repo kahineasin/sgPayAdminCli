@@ -104,6 +104,7 @@ public class PayAdminCliApp implements ISGUnProGuard
         cli.addSubcommand("upload", new ImgUpload(app)); 
         cli.addSubcommand("delete", new DataDeleter(app));
         cli.addSubcommand("total", new DataTotal(app));
+        cli.addSubcommand("refund", new OrderRefund(app));
         int exitCode = cli.execute(args);
         System.exit(exitCode);
 

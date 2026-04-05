@@ -1,0 +1,52 @@
+
+time:[2026-04-06 03:01:18]
+----errorLine----
+SGSqlExecuteBase.java: Line 408 -> 
+SGSqlExecuteBase.java: Line 75 -> 
+SGMySqlExecute.java: Line 30 -> 
+SGSqlExecute.java: Line 96 -> 
+OrderService.java: Line 57 -> 
+OrderService.java: Line 135 -> 
+OrderRefund.java: Line 135 -> 
+OrderRefund.java: Line 108 -> 
+OrderRefund.java: Line 1 -> 
+CommandLine.java: Line 2041 -> 
+CommandLine.java: Line 148 -> 
+CommandLine.java: Line 2461 -> 
+CommandLine.java: Line 2453 -> 
+CommandLine.java: Line 2415 -> 
+CommandLine.java: Line 2273 -> 
+CommandLine.java: Line 2417 -> 
+CommandLine.java: Line 2170 -> 
+PayAdminCliApp.java: Line 108  
+----errorMessage----
+com.sellgirl.sgJavaHelper.exception.PFSqlConnOpenException: ----errorLine----
+DriverManager.java: Line 689 -> 
+DriverManager.java: Line 247 -> 
+PFSqlConnHelper.java: Line 181 -> 
+PFSqlConnHelper.java: Line 117 -> 
+SGSqlExecuteBase.java: Line 381 -> 
+SGSqlExecuteBase.java: Line 75 -> 
+SGMySqlExecute.java: Line 30 -> 
+SGSqlExecute.java: Line 96 -> 
+OrderService.java: Line 57 -> 
+OrderService.java: Line 135 -> 
+OrderRefund.java: Line 135 -> 
+OrderRefund.java: Line 108 -> 
+OrderRefund.java: Line 1 -> 
+CommandLine.java: Line 2041 -> 
+CommandLine.java: Line 148 -> 
+CommandLine.java: Line 2461 -> 
+CommandLine.java: Line 2453 -> 
+CommandLine.java: Line 2415 -> 
+CommandLine.java: Line 2273 -> 
+CommandLine.java: Line 2417 -> 
+CommandLine.java: Line 2170 -> 
+PayAdminCliApp.java: Line 108  
+----errorMessage----
+java.sql.SQLException: No suitable driver found for jdbc:mysql://156.224.19.162:3306/sgshop?useSSL=false&allowPublicKeyRetrieval=true
+
+
+
+
+
