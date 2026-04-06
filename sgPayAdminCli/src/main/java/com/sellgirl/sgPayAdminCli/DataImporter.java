@@ -413,6 +413,7 @@ public class DataImporter implements Callable<Integer>, ISGUnProGuard {
 			} catch (Exception e) {
 				e.printStackTrace();
 				err++;
+				SGDataHelper.getLog().print("lastId:"+resourceId);
 			}
 			System.out.println("total err: "+err);
 			if(0<deny.length()) {System.out.println("deny: "+deny);}
@@ -437,17 +438,9 @@ public class DataImporter implements Callable<Integer>, ISGUnProGuard {
 	public void testGenSmallImg(String outImgPath,long resourceId,String jpgName,
 			ResourceType resourceType,int size) throws IOException {
 		
-		//for(int i=0;resourceIds.length>i;i++) {
-//			long resourceId=resourceIds[i];
-//			String srcImgPath=Paths.get("D:\\cache\\html1\\resourceImg",imgs[i]).toString();
-//			String dstImgPath=Paths.get("D:\\cache\\html1\\resourceImg",outImgs[i]).toString();
-//			URI srcImgPath=Paths.get(outImgPath,resourceType.toString(), String.valueOf(resourceId),jpgName).toUri();
-//			URI dstImgPath2=Paths.get(outImgPath,resourceType.toString()+String.valueOf(size), String.valueOf(resourceId),jpgName).toUri();
 			String srcImgPath=Paths.get(outImgPath,resourceType.toString(), String.valueOf(resourceId),jpgName).toString();
 			String dstImgPath=Paths.get(outImgPath,resourceType.toString()+String.valueOf(size), String.valueOf(resourceId),jpgName).toString();
-//			//String dstImgPathStr=dstImgPath.toString();
-//			SGDataHelper.getLog().print("aa-----"+dstImgPath2.toString());
-//			SGDataHelper.getLog().print("bb-----"+dstImgPath);
+
 			File file=new File(srcImgPath);
 //			String path=Paths.get(dstImgPath,String.valueOf( sizes[i]),"1.jpg").toString();
 

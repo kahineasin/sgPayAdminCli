@@ -146,7 +146,7 @@ public class OrderRefund implements Callable<Integer>, ISGUnProGuard{
     	orderService.setJdbc(app.getJdbc().getShop());
     	vipOrder order=orderService.GetOnevipOrder(outNo);
     	ZPayNativeService zPayService=new ZPayNativeService();
-    	return zPayService.refund2(order.getVip_order_id(), order.getOrder_no(), order.getAmount().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+    	return zPayService.refund3(order.getVip_order_id(), order.getOrder_no(), order.getAmount().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 	}
 
 }
